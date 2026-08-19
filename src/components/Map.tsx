@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -17,6 +17,30 @@ const customIcon = L.icon({
   popupAnchor: [1, -34],
   shadowSize: [41, 41]
 });
+
+function MapUpdater({ restaurants }: { restaurants: Restaurant[] }) {
+  const map = useMap();
+  
+  useEffect(() => {
+    if (restaurants.length > 0) {
+      const bounds = L.latLngBounds([]);
+      let hasValidCoords = false;
+      
+      restaurants.forEach(r => {
+        if (r.Latitude && r.Longitude && (r.Latitude !== 0 || r.Longitude !== 0)) {
+          bounds.extend([r.Latitude, r.Longitude]);
+          hasValidCoords = true;
+        }
+      });
+      
+      if (hasValidCoords) {
+        map.fitBounds(bounds, { padding: [50, 50], maxZoom: 15 });
+      }
+    }
+  }, [restaurants, map]);
+  
+  return null;
+}
 
 interface MapProps {
   restaurants: Restaurant[];
@@ -43,6 +67,7 @@ export default function Map({ restaurants }: MapProps) {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        <MapUpdater restaurants={restaurants} />
         <MarkerClusterGroup chunkedLoading>
           {restaurants.map((restaurant) => {
             // Some records might have invalid lat/long (0,0 or null)
