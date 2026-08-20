@@ -69,13 +69,15 @@ export default function Map({ restaurants }: MapProps) {
         />
         <MapUpdater restaurants={restaurants} />
         <MarkerClusterGroup chunkedLoading>
-          {restaurants.map((restaurant) => {
+          {restaurants.map((restaurant, index) => {
             // Some records might have invalid lat/long (0,0 or null)
             if (!restaurant.Latitude || !restaurant.Longitude || (restaurant.Latitude === 0 && restaurant.Longitude === 0)) return null;
             
+            const validId = restaurant["Restaurant ID"] && !isNaN(restaurant["Restaurant ID"]) ? restaurant["Restaurant ID"] : `fallback-map-${index}-${restaurant.Latitude}-${restaurant.Longitude}`;
+            
             return (
               <Marker
-                key={restaurant["Restaurant ID"]}
+                key={validId}
                 position={[restaurant.Latitude, restaurant.Longitude]}
                 icon={customIcon}
               >

@@ -1,6 +1,7 @@
 import { getRestaurantData } from '@/lib/data';
 import Dashboard from '@/components/Dashboard';
-import { Database, Activity, Map, LayoutDashboard, PieChart, UtensilsCrossed } from 'lucide-react';
+import Navigation from '@/components/Navigation';
+import { Database } from 'lucide-react';
 
 export const metadata = {
   title: 'Location Intelligence | Cognifyz Analytics',
@@ -12,25 +13,8 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans selection:bg-blue-100 selection:text-blue-900">
-      
       {/* Sticky Navigation */}
-      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200/50 shadow-sm">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="bg-blue-600 p-2 rounded-lg">
-              <Activity className="w-5 h-5 text-white" />
-            </div>
-            <span className="font-bold text-lg tracking-tight text-slate-900 hidden sm:block">Cognifyz Analytics</span>
-          </div>
-          
-          <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
-            <a href="#overview" className="hover:text-blue-600 transition-colors flex items-center gap-1.5"><LayoutDashboard className="w-4 h-4"/> Overview</a>
-            <a href="#map" className="hover:text-blue-600 transition-colors flex items-center gap-1.5"><Map className="w-4 h-4"/> Map</a>
-            <a href="#analytics" className="hover:text-blue-600 transition-colors flex items-center gap-1.5"><PieChart className="w-4 h-4"/> Analytics</a>
-            <a href="#restaurants" className="hover:text-blue-600 transition-colors flex items-center gap-1.5"><UtensilsCrossed className="w-4 h-4"/> Restaurants</a>
-          </div>
-        </div>
-      </nav>
+      <Navigation />
 
       {/* Hero Section */}
       <header className="relative overflow-hidden bg-slate-950 pt-16 pb-24 sm:pt-24 sm:pb-32">

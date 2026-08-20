@@ -230,7 +230,7 @@ export default function Dashboard({ initialData }: DashboardProps) {
         </div>
 
         {/* Filters Section */}
-        <Card className="bg-slate-50/50 border-slate-200/60 shadow-sm">
+        <Card id="explore" className="bg-slate-50/50 border-slate-200/60 shadow-sm scroll-mt-24">
           <CardContent className="p-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
               <div>
@@ -263,8 +263,9 @@ export default function Dashboard({ initialData }: DashboardProps) {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">City</label>
+                <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider" htmlFor="city-filter">City</label>
                 <select 
+                  id="city-filter"
                   value={cityFilter}
                   onChange={(e) => {setCityFilter(e.target.value); setLocalityFilter('All'); setPage(1);}}
                   className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
@@ -549,8 +550,10 @@ export default function Dashboard({ initialData }: DashboardProps) {
                       </td>
                     </tr>
                   ) : (
-                    paginatedData.map((r) => (
-                      <tr key={r["Restaurant ID"]} className="bg-white hover:bg-slate-50/80 transition-colors group">
+                    paginatedData.map((r, index) => {
+                      const validId = r["Restaurant ID"] && !isNaN(r["Restaurant ID"]) ? r["Restaurant ID"] : `fallback-table-${index}-${r.Latitude}-${r.Longitude}`;
+                      return (
+                      <tr key={validId} className="bg-white hover:bg-slate-50/80 transition-colors group">
                         <td className="px-6 py-4">
                           <div className="font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">{r["Restaurant Name"]}</div>
                           <div className="text-xs text-slate-500 mt-0.5">ID: {r["Restaurant ID"]}</div>
@@ -586,7 +589,8 @@ export default function Dashboard({ initialData }: DashboardProps) {
                           </span>
                         </td>
                       </tr>
-                    ))
+                    );
+                  })
                   )}
                 </tbody>
               </table>
