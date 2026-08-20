@@ -1,5 +1,5 @@
 # Restaurant Location Intelligence
-
+## live at: https://restaurant-location-analysis-zgif.vercel.app/
 ## Description
 A professional location-based analysis dashboard of restaurants, built for the Cognifyz internship task. This interactive dashboard analyzes a dataset of 9,551 restaurants, providing key performance indicators, dynamic filtering, interactive maps, and insightful charts.
 
